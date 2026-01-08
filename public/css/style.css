@@ -1,0 +1,171 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 2rem;
+}
+
+
+.navbar{
+    height: 5rem;
+    background-color: white;
+
+}
+.fa-compass{
+    color: #8d1198;
+    font-size: 2rem;
+    
+}
+
+.nav-link{
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    color: #222222 !important;
+}
+
+.listing-card{
+    border: none !important;
+    margin-bottom: 2rem !important;
+    margin-top: 1rem !important;
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding:0 !important;
+}
+
+.card-text p{
+    font-weight: 400 !important;
+}
+
+.listing-link{
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.card-img-overlay{
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 1rem !important;
+    color: white !important;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.card:hover .card-img-overlay{
+    opacity: 0.2;
+    background-color: white !important;
+}
+
+.container{
+    flex:1;
+}
+
+.add-btn{
+    background-color:#8d1198 !important;
+    border:none !important;
+    margin-top:1rem !important;
+    margin-bottom:2rem !important;
+    padding:0.5rem 2rem !important;
+    font-size:1.2rem !important;
+    border-radius:0.5rem !important;
+    color:white !important;
+    transition: background-color 0.3s ease;
+
+}
+.add-btn:hover{
+    background-color:#6e0e75 !important;
+    color:white !important;
+    text-decoration:none !important;
+}
+
+.show-img{
+   height: 40vh !important;
+
+}
+.btns{
+    display: flex;
+   gap: 1rem;
+}
+
+
+ .hero {
+      background: url('https://images.unsplash.com/photo-1505691723518-34e2b0f0d2d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+    }
+    .listing-card img {
+      height: 200px;
+      object-fit: cover;
+    }
+    .about-section {
+      background: #f8f9fa;
+      padding: 60px 0;
+    }
+    .cta-section {
+      background: #343a40;
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+    }
+    .cta-section .btn {
+      font-size: 1.2rem;
+      padding: 10px 30px;
+    }
+
+.hero-content h1{
+    color: #222222;
+
+}
+.hero-content p{
+    color: #424040;
+
+}
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1; /* This pushes the footer down */
+}
+.alert {
+  animation: popIn 0.5s ease-in-out;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+#map { 
+  height: 300px;
+  width: 80vh;
+ }
