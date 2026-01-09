@@ -13,6 +13,46 @@
     display:inline;
     margin-right: 0.5rem;
    }
+   @media (max-width: 768px) {
+  .navbar-nav {
+    text-align: center;
+  }
+
+  .navbar form {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .navbar form input,
+  .navbar form button {
+    width: 100%;
+    margin: 0.3rem 0;
+  }
+
+  .navbar form button i {
+    display: none; /* hide icon on small screens */
+  }
+}
+@media (max-width: 768px) {
+
+  .navbar-collapse {
+    padding: 1rem 0;
+  }
+
+  .navbar-nav {
+    gap: 0.5rem;
+  }
+
+  .btn-search {
+    width: 100%;
+    padding: 0.6rem;
+  }
+
+  .navbar-nav a {
+    font-size: 1rem;
+  }
+
+}
 
 </style>
 
@@ -29,13 +69,13 @@
        
         
       </div>
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-    <input class="form-control me-2" type="search" placeholder="Search Destination" >
+      <div class="navbar-nav mx-md-auto my-2 my-md-0">
+        <form class="d-flex flex-column flex-md-row" role="search">
+    <input class="form-control mb-2 mb-md-0 me-md-2" type="search" placeholder="Search Destination" >
     <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
   </form>
       </div>
-      <div class="navbar-nav ms-auto" >
+      <div class="navbar-nav ms-md-auto text-center" >
          <a class="nav-link" href="/listings/new">StayNest Your Home</a>
         <% if(!currUser) { %>
         <a class="nav-link"  href="/signup"> <b>Sign up</b></a>

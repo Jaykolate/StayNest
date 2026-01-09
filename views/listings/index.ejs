@@ -3,130 +3,99 @@
 
 
 <style>
-  #filters{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+  .filters-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  
+}
+  #filters {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  margin-top: 2rem;
+  flex-wrap: nowrap;
+   flex: 1;            /* 🔥 take remaining space */
+  min-width: 0; 
+ 
+}
+
+#filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter {
+  text-align: center;
+  min-width: 80px;
+  opacity: 0.7;
+}
+
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.filter p {
+  font-size: 0.75rem;
+}
+.tax-toggle-container {
+  flex-shrink: 0;   /* 🔒 never push it down */
+}
 
 
-  }
-  .filter{
-    text-align: center;
-    margin-right:1.5rem ;
-    margin-top: 2rem;
-    opacity: 0.7;
 
-  }
-  .filter:hover{
-    opacity: 1;
-    cursor: pointer;
-  }
-  .filter p{
-    font-size: 0.8rem;
-  }
-  .tax-info{
-    display: none;
-  }
-  .tax-toggle{
-    border: 1px solid black;
-    border-radius: 1rem;
-    height:3rem;
-    padding: 1rem;
-    margin-left: 3rem;
-    display: flex;
-    align-items: center;
 
-  }
-  /* =========================
-   Tablets (≤ 992px)
-========================= */
+
+
+.tax-toggle {
+  border: 1px solid #000;
+  border-radius: 1rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.86rem;
+
+
+ 
+}
+
+/* Tablets */
 @media (max-width: 992px) {
-  #filters {
-    justify-content: center;
-  }
-
-  .filter {
-    margin-right: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .filter i {
-    font-size: 1.2rem;
-  }
-
-  .filter p {
-    font-size: 0.75rem;
-  }
-
-  .tax-toggle {
-    margin-left: 0;
-    margin-top: 1.5rem;
-  }
-}
-
-/* =========================
-   Mobile (≤ 768px)
-========================= */
-@media (max-width: 768px) {
-  #filters {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-  }
-
-  .filter {
-    min-width: 80px;
-    margin-right: 1rem;
-    margin-top: 1rem;
-  }
-
-  .filter i {
-    font-size: 1.1rem;
-  }
-
-  .filter p {
-    font-size: 0.7rem;
-  }
-
-  .tax-toggle {
-    width: 100%;
-    margin: 1rem 0 0 0;
-    justify-content: center;
-  }
-}
-
-/* =========================
-   Small Mobile (≤ 576px)
-========================= */
-@media (max-width: 576px) {
-  #filters {
-    gap: 0.5rem;
-  }
-
   .filter {
     min-width: 70px;
-    margin-right: 0.5rem;
-  }
-
-  .filter i {
-    font-size: 1rem;
-  }
-
-  .filter p {
-    font-size: 0.65rem;
-  }
-
-  .tax-toggle {
-    height: auto;
-    padding: 0.7rem;
-    font-size: 0.8rem;
   }
 }
+
+
+/* Mobile */
+@media (max-width: 768px) {
+  .tax-toggle {
+    width: 100%;
+    text-align: center;
+  }
+  .filters-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #filters{
+    width:100%;
+    text-align: center;
+  }
+}
+
+
+
+@media (max-width: 576px) {
+  .listing-img {
+    height: 200px;
+  }
+}
+
+
 
 
 </style>
-
+<div class="filters-wrapper">
 <div id="filters">
    <div class="filter">
     <div> <i class="fa-solid fa-fire"></i></div>
@@ -173,31 +142,42 @@
     <p>Boats</p>
    </div>
 
+
+</div>
+<div class="tax-toggle-container">
   <div class="tax-toggle">
     <div class="form-check-reverse form-switch">
-    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-    <label class="form-check-label" for="flexSwitchCheckDefault">Display total after Taxes</label>
-</div>
+      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">
+        Display total after Taxes
+      </label>
+    </div>
   </div>
 </div>
+</div>
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3 ">
+<div class="container">
+<div class="row g-4 mt-2 row-cols-2 row-cols-md-2 row-cols-lg-3">
  <% for(let listing of allListings) { %>
-  <a href="/listings/<%= listing._id %>" class="listing-link">
+
+  <div class="col">
+  <a href="/listings/<%= listing._id %>" class="listing-link d-block">
 <div class="card listing-card">
-  <img src="<%= listing.image.url %>" class="card-img-top" alt="listing"style="height: 20rem;">
+  <img src="<%= listing.image.url %>" class="card-img-top img-fluid listing-img" alt="listing" >
 
    <div class="card-img-overlay"></div>
   <div class="card-body">
     <p class="card-text">
         <b><%= listing.title %></b>    <br>
-           &#8377; <%= listing.price.toLocaleString('en-IN') %>
+           &#8377; <%= listing.price.toLocaleString('en-IN') %>/night
            <i class="tax-info"> &nbsp; &nbsp; +18% GST</i>
     </p>
   </div>
    </div>
   </a>
+  </div>
  <% } %>
+   </div>
    </div>
 
    
