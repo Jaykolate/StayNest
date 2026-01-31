@@ -13,6 +13,7 @@ const upload = multer({storage});
 
 
 
+
 const validateListing = (req, res, next) => {
   const { error } = listingSchema.validate(req.body);
   if (error) {
@@ -30,6 +31,11 @@ router.get("/new",isLoggedIn, listingController.RenderNewFrom);
 
 
 //Show Route
+
+
+router.get("/:id/book", isLoggedIn, wrapAsync(listingController.bookingForm));
+router.post("/:id/book", isLoggedIn, wrapAsync(listingController.createBooking));
+
 router.get("/:id", wrapAsync(listingController.RenderShowRoute));
 
 //Create Route

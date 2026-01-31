@@ -23,6 +23,16 @@
           </p>
         </div>
       </div>
+      <% if (currUser && !currUser._id.equals(listing.owner._id)) { %>
+      <div class="bookbtn mt-3">
+     <a href="/listings/<%= listing._id %>/book" class="btn btn-primary">
+      Book Now
+      </a>
+</div>
+<% } %>
+
+
+
          
       <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
       <div class="btns mt-2">
@@ -108,5 +118,39 @@
   
 </div>
   <br>
+  <script>
+  const bookNowBtn = document.getElementById("bookNowBtn");
+  const formContainer = document.getElementById("bookingFormContainer");
+
+  const daysInput = document.getElementById("days");
+  const peopleInput = document.getElementById("people");
+  const totalAmountSpan = document.getElementById("totalAmount");
+
+  const PRICE_PER_DAY = <%= listing.price %>;
+
+  // Show booking form
+  bookNowBtn.addEventListener("click", () => {
+    formContainer.style.display = "block";
+    bookNowBtn.style.display = "none";
+  });
+
+  function calculateTotal() {
+    const days = Number(daysInput.value) || 0;
+    const people = Number(peopleInput.value) || 0;
+
+    const total = days * people * PRICE_PER_DAY;
+    totalAmountSpan.textContent = total.toLocaleString("en-IN");
+  }
+
+  daysInput.addEventListener("input", calculateTotal);
+  peopleInput.addEventListener("input", calculateTotal);
+
+  document.getElementById("bookingForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    alert("Booking amount ₹" + totalAmountSpan.textContent + " – ready for Stripe 🚀");
+  });
+</script>
+
   <script src="/js/map.js"></script>
 

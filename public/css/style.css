@@ -41,8 +41,22 @@ body {
 .card-img-top{
     border-radius: 1rem !important;
     width: 100% !important;
+    height: 290px !important;
     object-fit: cover !important;
 }
+.book{
+    background-color:#8d1198 !important;
+    border:none !important;
+    padding:0.5rem 2rem !important;
+    font-size:1rem !important;
+    border-radius:0.5rem !important;
+    color:white !important;
+    transition: background-color 0.3s ease;
+}
+.btn-book{
+  margin-bottom: 40px !important;
+}
+
 .card-body{
     padding:0 !important;
 }

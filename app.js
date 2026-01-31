@@ -8,6 +8,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressErr = require("./utils/ExpressErr.js");
+require("./utils/bookingCleaner");
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -19,6 +20,8 @@ const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 const user = require("./routes/user.js");
 const User = require("./models/user");
+const listingRoutes = require("./routes/listing");
+const bookingRoutes = require("./routes/booking");
 
 
 
@@ -94,6 +97,9 @@ app.use((req,res,next)=>{
 
 
 
+
+app.use("/listings", listingRoutes);
+app.use("/bookings", bookingRoutes);
 app.use("/listings",listings);
 app.use("/listings/:id/reviews",reviews);
 app.use("/",user);

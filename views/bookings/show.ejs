@@ -1,0 +1,73 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-4 mb-4">
+  <div class="card p-4 shadow-sm">
+
+    <h3 class="mb-3">Booking Details</h3>
+
+    <!-- STATUS -->
+    <p>
+      <strong>Status:</strong>
+      <% if (booking.paymentStatus === "paid") { %>
+        <span class="badge bg-success">Paid</span>
+      <% } else { %>
+        <span class="badge bg-warning text-dark">Pending Payment</span>
+      <% } %>
+      <% if (booking.paymentStatus === "cancelled") { %>
+         <span class="badge bg-danger">Cancelled</span>
+       <% } %>
+    </p>
+
+    <hr>
+
+    <!-- PROPERTY INFO -->
+    <h5>Property Information</h5>
+    <p><strong>Listing:</strong> <%= booking.listing.title %></p>
+    <p><strong>Location:</strong> <%= booking.listing.location %>, <%= booking.listing.country %></p>
+
+    <hr>
+
+    <!-- GUEST INFO -->
+    <h5>Guest Information</h5>
+    <p><strong>Name:</strong> <%= booking.user.username %></p>
+    <p><strong>Phone:</strong> <%= booking.phone %></p>
+
+    <hr>
+
+    <!-- BOOKING INFO -->
+    <h5>Booking Information</h5>
+    <p>
+      <strong>Check-in:</strong>
+      <%= booking.checkIn.toDateString() %>
+    </p>
+    <p>
+      <strong>Check-out:</strong>
+      <%= booking.checkOut.toDateString() %>
+    </p>
+    <p><strong>Nights:</strong> <%= booking.nights %></p>
+    <p><strong>Price per night:</strong> ₹ <%= booking.pricePerNight %></p>
+
+    <hr>
+
+    <!-- TOTAL -->
+    <h4 class="text-end">
+      Total Amount: ₹ <%= booking.totalAmount %>
+    </h4>
+
+    <hr>
+
+    <!-- ACTION BUTTONS -->
+    <div class="d-flex justify-content-between mt-3">
+      <a href="/listings/<%= booking.listing._id %>" class="btn btn-outline-primary">
+        Back to Listing
+      </a>
+
+      <% if (booking.paymentStatus === "pending") { %>
+        <a href="/bookings/<%= booking._id %>/pay" class="btn btn-success">
+          Pay Now
+        </a>
+      <% } %>
+    </div>
+
+  </div>
+</div>

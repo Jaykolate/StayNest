@@ -1,0 +1,155 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-4">
+  <h3>Confirm Your Booking</h3>
+
+  <form  action="/listings/<%= listing._id %>/book" method="POST">
+    <!-- USER DETAILS -->
+    <div class="card p-3 mb-3">
+      <h5>Guest Details</h5>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control"  value="<%= currUser.username %>" readonly>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" name="phone" placeholder="Enter phone number" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTING DETAILS -->
+    <div class="card p-3 mb-3">
+      <h5>Property Details</h5>
+
+      <div class="mb-2">
+        <label class="form-label">Listing Name</label>
+        <input type="text" class="form-control" value="<%= listing.title %>" readonly>
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label">Price per Night (₹)</label>
+        <input type="text" class="form-control" value="<%= listing.price %>" readonly id="pricePerNight">
+      </div>
+    </div>
+
+    <!-- BOOKING DETAILS -->
+    <div class="card p-3 mb-3">
+      <h5>Booking Details</h5>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label">Check-in Date</label>
+          <input 
+          type="date"
+           class="form-control"
+            name="checkIn" 
+            id="checkIn" 
+            required
+            >
+          <p id="dateError" class="text-danger mt-2" style="display:none;">
+                   Selected check-in date is already booked.
+  </p>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Number of Nights</label>
+          <input type="number" class="form-control" name="nights" id="nights" min="1" value="1" required>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-6">
+          <label class="form-label">Check-out Date</label>
+          <input type="date" class="form-control" name="checkOut" id="checkOut" readonly>
+        </div>
+        <input type="hidden" name="pricePerNight" value="<%= listing.price %>">
+
+
+        <div class="col-md-6">
+          <label class="form-label">Total Amount (₹)</label>
+          <input type="text" class="form-control" name="totalAmount" id="totalAmount" readonly>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-book btn btn-success w-100">
+      Proceed to Payment
+    </button>
+  </form>
+</div>
+<script>
+  const bookedRanges = <%- JSON.stringify(bookings) %>;
+</script>
+
+<script>
+  const pricePerNight = <%= listing.price %>;
+  const checkInInput = document.getElementById("checkIn");
+  const nightsInput = document.getElementById("nights");
+  const checkOutInput = document.getElementById("checkOut");
+  const totalAmountInput = document.getElementById("totalAmount");
+  const dateError = document.getElementById("dateError");
+  // Disable past dates
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+// Set min date for input
+  checkInInput.min = today.toISOString().split("T")[0];
+
+
+  // bookedRanges comes from backend
+  // [{ checkIn: "...", checkOut: "..." }, ...]
+
+  function isDateBooked(date) {
+    return bookedRanges.some(b => {
+      const start = new Date(b.checkIn);
+      const end = new Date(b.checkOut);
+      return date >= start && date < end;
+    });
+  }
+
+  function calculateBooking() {
+    const selectedDate = new Date(checkInInput.value);
+    selectedDate.setHours(0, 0, 0, 0);
+
+if (selectedDate < today) {
+  dateError.textContent = "You cannot select past dates.";
+  dateError.style.display = "block";
+  checkInInput.value = "";
+  return;
+}
+
+    const checkInValue = checkInInput.value;
+    const nights = Number(nightsInput.value);
+
+    if (!checkInValue || nights < 1) return;
+
+    const checkInDate = new Date(checkInValue);
+
+    // 🚨 Check if selected date is booked
+    if (isDateBooked(checkInDate)) {
+      dateError.style.display = "block";
+      checkInInput.value = "";
+      checkOutInput.value = "";
+      totalAmountInput.value = "";
+      return;
+    } else {
+      dateError.style.display = "none";
+    }
+
+    // Calculate checkout date
+    const checkOutDate = new Date(checkInDate);
+    checkOutDate.setDate(checkOutDate.getDate() + nights);
+    checkOutInput.value = checkOutDate.toISOString().split("T")[0];
+
+    // Calculate total
+    const total = nights * pricePerNight;
+    totalAmountInput.value = total;
+  }
+
+  checkInInput.addEventListener("change", calculateBooking);
+  nightsInput.addEventListener("input", calculateBooking);
+</script>
